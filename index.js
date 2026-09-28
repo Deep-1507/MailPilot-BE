@@ -8,19 +8,19 @@ import { fileURLToPath } from "url";
 import mongoose from 'mongoose';
 
 // Routes
-import userRoutes from "./routers/userRouter.js";
-import credRoutes from "./routers/credRouter.js";
-import templateRoutes from "./routers/templateRouter.js";
-import mainRoutes from "./routers/mainRouter.js";
-import apiRoutes from "./routers/apiRouter.js";
-import busineessUserGroup from "./routers/businessUserGroupRouter.js";
-import adminRoutes from "./routers/adminRouter.js";
+import userRoutes from "./src/routers/userRouter.js";
+import credRoutes from "./src/routers/credRouter.js";
+import templateRoutes from "./src/routers/templateRouter.js";
+import mainRoutes from "./src/routers/mainRouter.js";
+import apiRoutes from "./src/routers/apiRouter.js";
+import busineessUserGroup from "./src/routers/businessUserGroupRouter.js";
+import adminRoutes from "./src/routers/adminRouter.js";
 
 // NEW
-import mailRoutes from "./routers/mailRouter.js";
+import mailRoutes from "./src/routers/mailRouter.js";
 
 // DB Connection
-import { MONGO_URI } from '../config.js';
+import { MONGO_URI } from './config.js';
 
 const app = express();
 const server = http.createServer(app);
