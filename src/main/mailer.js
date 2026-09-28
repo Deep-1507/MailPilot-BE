@@ -69,19 +69,19 @@ export async function sendMail(req, res) {
     const CredData = await getCredentials(credId);
     const TemplateData = await getTemplate(templateId);
 
-   const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: CredData.email,
-    pass: CredData.password,
-  },
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: CredData.email,
+        pass: CredData.password,
+      },
 
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 20000,
-});
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 20000,
+    });
 
     let emailResponses = [];
 
@@ -94,14 +94,14 @@ export async function sendMail(req, res) {
       let isunique = false;
 
       while (!isunique) {
-            generatedTrackingId = generateTrackingId(currentRecipientMail);
-      
-            const existingTrackingId = await sentMails.findOne({ uniqueIdforTracking: generatedTrackingId });
-      
-            if (!existingTrackingId) {
-              isunique = true;
-            }
-          }
+        generatedTrackingId = generateTrackingId(currentRecipientMail);
+
+        const existingTrackingId = await sentMails.findOne({ uniqueIdforTracking: generatedTrackingId });
+
+        if (!existingTrackingId) {
+          isunique = true;
+        }
+      }
 
 
       let emailTemplate = TemplateData.template;
@@ -142,7 +142,7 @@ export async function sendMail(req, res) {
             templateId: TemplateData.templateId,
             status: "sent",
             opened: false,
-            uniqueIdforTracking:generatedTrackingId
+            uniqueIdforTracking: generatedTrackingId
           });
 
           emailResponses.push({
@@ -184,19 +184,19 @@ export async function trackEmail(req, res) {
     const { trackingId } = req.query;
     console.log("Tracking email for:", trackingId);
 
-     if (!trackingId) {
-       return res.status(400).json({ success: false, message: "Invalid request" });
-     }
+    if (!trackingId) {
+      return res.status(400).json({ success: false, message: "Invalid request" });
+    }
 
     const updateResult = await sentMails.updateOne(
-      {uniqueIdforTracking:trackingId },
+      { uniqueIdforTracking: trackingId },
       { $set: { opened: true, status: "opened" } }
     );
 
     if (updateResult.matchedCount === 0) {
       console.warn(`No matching email found for tracking: ${trackingId}`);
     }
- 
+
     const pixel = Buffer.from(
       "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/YnKqzIAAAAASUVORK5CYII=",
       "base64"
