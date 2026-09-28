@@ -43,9 +43,9 @@ export const getCreds = async (req, res) => {
 
     console.log(creds)
 
-    if (!creds || creds.length === 0) {
-      return res.status(404).json({ message: "No credentials found" });
-    }
+    // if (!creds || creds.length === 0) {
+    //   return res.status(404).json({ message: "No credentials found" });
+    // }
 
     res.status(200).json(creds);
   } catch (error) {

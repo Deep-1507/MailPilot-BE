@@ -10,9 +10,9 @@ export const getSentMailsHsitory = async (req, res) => {
     const mails = await sentMails.find({ userId: req.userId });
     console.log(mails)
 
-    if (!mails || mails.length === 0) {
-      return res.status(404).json({ message: "No mails found" });
-    }
+    // if (!mails || mails.length === 0) {
+    //   return res.status(200).json({ message: "No mails found" });
+    // }
 
     res.status(200).json(mails);
   } catch (error) {

@@ -44,9 +44,9 @@ export const getUserGroups = async (req, res) => {
     try {
       const userGroups = await BusinessUserGroup.find({ createdByUserId: req.userId });
   
-      if (userGroups.length === 0) {
-        return res.status(404).json({ message: "No groups found for this user" });
-      }
+      // if (userGroups.length === 0) {
+      //   return res.status(404).json({ message: "No groups found for this user" });
+      // }
   
       res.status(200).json({ groups: userGroups });
     } catch (error) {
