@@ -4,11 +4,12 @@ import {
     connectMail,
     disconnectMail
 } from "../controllers/mailController.js";
+import { authMiddleware } from "../middlewares/authmiddleware.js";
 
 const router = express.Router();
 
-router.post("/connect", connectMail);
+router.post("/connect",authMiddleware, connectMail);
 
-router.post("/disconnect", disconnectMail);
+router.post("/disconnect",authMiddleware, disconnectMail);
 
 export default router;

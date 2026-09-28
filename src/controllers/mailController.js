@@ -6,9 +6,11 @@ import { connectMailbox, disconnectMailbox } from "../services/imapService.js";
  */
 export const connectMail = async (req, res) => {
   try {
-    const { userId, credId, page = 1, limit = 50 } = req.body;
+    const { credId, page = 1, limit = 50 } = req.body;
 
-    if (!userId || !credId) {
+    // console.log(req.userId, credId)
+
+    if (!credId) {
       return res.status(400).json({
         success: false,
         message: "userId and credId are required",
@@ -19,7 +21,7 @@ export const connectMail = async (req, res) => {
 
     console.log("Before connectMailbox");
 
-    const emails = await connectMailbox(userId, credId, page, limit, (mail) => {
+    const emails = await connectMailbox(req.userId, credId, page, limit, (mail) => {
       io.to(userId).emit("new-mail", mail);
     });
 
@@ -46,7 +48,7 @@ export const connectMail = async (req, res) => {
  */
 export const disconnectMail = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.userId;
 
     await disconnectMailbox(userId);
 
