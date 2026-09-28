@@ -69,14 +69,19 @@ export async function sendMail(req, res) {
     const CredData = await getCredentials(credId);
     const TemplateData = await getTemplate(templateId);
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: CredData.email,
-        pass: CredData.password,
-      },
-      debug: true,
-    });
+   const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: CredData.email,
+    pass: CredData.password,
+  },
+
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 20000,
+});
 
     let emailResponses = [];
 
